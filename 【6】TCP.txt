@@ -1,0 +1,61 @@
+1、面向连接的通信和保证顺序的传递。
+2、面向字节（一字节传输错误就会出现错误） 允许ASCII字符或者Unicode进行传输。
+3、可靠性(基于确定和超时实现一系列的机制来达到可靠性的要求)
+4、流控制(用来确保两点之间传输数据的平衡)
+5、拥堵控制（内置的机制能控制数据包的延迟率及丢包率不会太高，确保服务质量（QoS））
+
+HTTP协议是基于TCP协议的的。 同理TCP也可以创建server。
+
+const net = require('net');
+const server = net.createServer(function(conn){
+conn.write('在客户端输出的内容');
+});
+server.listen(3000); //监听3000端口
+
+
+
+Eg:基于TCP nodejs聊天室
+const net = require('net');
+const users = {},
+          count = 0;
+const server = net.createServer(function(conn){
+       var nickname; //每次连接时就新建一个昵称
+conn.setEncoding('utf8'); //设置输出格式
+//当有终端用于连接时
+conn.write(
+'\n > welcome to \033[92mnode-chat\033[39m!' + 
+       '\n > ' + ++count + '  other people are connected at this time ' + 
+' \n > please write your name and press enter: '
+);
+//接收用户输入
+conn.on('data', function(data){
+data = data.replace('\r\n', ''); //将回车都清空
+if(!nickname){ //还未注册的新用户
+      if(users[data]){ //已存在的用户
+conn.write('users has already exists in users');
+return;
+}else{
+nickname = data;
+users[nickname] = conn;
+for(let i in users){
+users[i].write('\033[90m' + nickname + ''joined the room\033[39m'');
+}
+}
+}else{
+//当用户已经注册，这时相当于聊天
+for(let i in users){
+if( i != nickname){ //避免与自己交谈
+users[i].write('\033[90m' + nickname + ' > :' + data + '\n'); //聊天发言
+}
+}
+}
+})
+});
+conn.on('close', function(){
+count--;
+delete users[nickname]; //删除离开的用户
+console.log('\033[93m has people leave the room\033[39m');
+})
+//监听3000端口
+server.listen(3000);
+
