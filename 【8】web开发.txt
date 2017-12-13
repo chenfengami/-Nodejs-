@@ -1,0 +1,3 @@
+第八章主要讲了web开发，从中用到的路由，以及中间件和connect模块。
+（1）目录代替
+server.use('/my-images', connect.static('/website/images'));

@@ -1,0 +1,15 @@
+（1）结构
+请求：http.ServerRequest
+响应：http.ServerResponse
+（2）了解【查询字符串】querystring; 会利用process.argv 用来服务端请求数据的参数传递
+如  
+const qs = require('querystring');  
+qs.parse('qs=abc') // { qs: abc }  
+       qs.stringify({ qs: abc, name: cf}); //qs="abc"&name="cf" 
+
+（3）http.request({})模仿一个请求。
+http.request({
+host: 'xx',
+       port: 'xx'
+})
+（4）通过req.method req.url去判断路由的变化和请求方法。
