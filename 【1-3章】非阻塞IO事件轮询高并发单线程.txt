@@ -1,0 +1,20 @@
+（1）非阻塞IO
+（2）事件轮询（非阻塞IO基础核心）//通过异步方式
+setTimeout(function(){
+console.log(1):
+}, 1000)
+setTimeout(function(){
+console.log(2);
+}, 2000)
+//这边的事件执行并不是同步的，当1000ms过后执行打印1，再过1000ms过后执行打印2，话费时间总共为2000ms, 下面那个事件的执行并不需要等待第一个事件完成。（即并不是1000+2000ms = 3000ms）
+（3）高并发
+//事件堆栈（V8引擎对Js执行的速度，一秒上千条请求，并不是一次性完成“所谓的多线程”）
+function a(){
+b();   //通过回调函数
+}
+（4）需要错误处理。上下文内容丢失。
+const http = require('http'):
+http.createServer(function(){
+throw new Error('错误未被捕获');  
+//nodeJS一定要对错误进行第一时间捕获处理，不然会影响调用的上下文
+})
