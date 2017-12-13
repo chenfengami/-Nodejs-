@@ -1,0 +1,26 @@
+（1）global 相当于Js中的window
+（2）process 所有全局执行上下文中的内容都在process对象中。
+process.stdout.write(); 输出
+       process.stdin.resume() 等待用户输入
+       process.stdin.setEncoding('utf8') 设置输入编码方式
+       process.resume(); 等待命令输入
+       process.cwd()  当前程序运行的目录 __dirname是当前文件运行时的目录
+       process.exit(1);  退出当前程序，一般用于错误发生时 error
+       process.on('SIGKILL',callback)杀死进程  进程和操作系统通信
+       process.argv node运行时候的参数 process.argv.slice(2)表示为当前终端输入的参 数值 如 node index.js --save dev 即返回的参数为[--save, dev]
+（3）模块系统中的三个核心全局对象：require、module、exports
+（4）Js事件监听和Node中事件监听的区别。
+
+const Event = require('events');
+const eventEmitter = new Event();
+eventEmitter.on('event',callback); 绑定'event'函数
+eventEmitter.emit('event'); 执行函数 参数为绑定的事件名称
+
+  
+（5）ANSI转义码 --terminal下控制文本格式、颜色以及其他输出选项
+console.log('033[90m' + data.replace((.)g), '$1' + '033[39m');
+033：表示转义序列的开始。
+[：表示开始时颜色的设置。
+90：表示前景色为亮灰色。
+m：表示颜色这只结束。
+最后用的39表示将颜色再设置回去，我们只用于一段的文本颜色控制。
