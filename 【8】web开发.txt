@@ -1,3 +1,12 @@
 第八章主要讲了web开发，从中用到的路由，以及中间件和connect模块。
 （1）目录代替
 server.use('/my-images', connect.static('/website/images'));
+（2）静态资源托管
+server.use(connect.static(__dirname + '/website'))
+
+处理/website目录下的静态资源
+（3）jquer中间件
+server.use(connect.jquery); 
+用于自动获取url的参数//获取字符串
+（4）looger日志中间件。
+server.use(connect.looger('dev'));  default、dev、short、tiny四种日志格式
